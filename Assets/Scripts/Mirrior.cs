@@ -22,7 +22,7 @@ public class Mirrior : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player"))
         {
             other.transform.position =
                 new Vector3(otherSide.transform.position.x + distance, other.transform.position.y, other.transform.position.z);

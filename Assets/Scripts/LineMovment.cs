@@ -6,7 +6,7 @@ public class LineMovment : MonoBehaviour
 {
 
     // For moving platforms
-    private bool To_Right = true;
+    /*private bool To_Right = true;*/
     [SerializeField] private float Offset = 1.2f;
     [SerializeField] private float multiplier = 2;
     [SerializeField] private float speed = 1f;

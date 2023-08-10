@@ -37,8 +37,8 @@ public class EnemyManager : MonoBehaviour
 
     Vector3 GetNextPos()
     {
-        minEnemyDistance -= float.Parse(_score.text) * 1 / 100;
-        maxEnemyDistance -= float.Parse(_score.text) * 1 / 100;
+        minEnemyDistance = minEnemyDistance -float.Parse(_score.text) * 1 / 100;
+        maxEnemyDistance = maxEnemyDistance - float.Parse(_score.text) * 1 / 100;
         Vector3 pos = new Vector3(Random.Range(-maxWeight,maxWeight), lastEnemy.transform.position.y + Random.Range(minEnemyDistance,maxEnemyDistance), 0);
         return pos;
     }

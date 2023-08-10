@@ -42,7 +42,7 @@ public class Player : MonoBehaviour
             _nextFire = Time.time + fireRate;
 
             egg bullet = eggs[Random.Range(0, eggs.Length)];
-            Instantiate(bullet, projectile.transform.position, Quaternion.identity);
+            Instantiate(bullet, projectile.transform.position, projectile.transform.rotation);
 
         }
     }

@@ -40,8 +40,8 @@ public class PlatformManager : MonoBehaviour
 
     private Vector3 GetNextPosition()
     {
-        minHeight += float.Parse(_score.text) * 1 / 1000;
-        maxHeight += float.Parse(_score.text) * 1 / 1000;
+        minHeight += float.Parse(_score.text) * 1 / 10000;
+        maxHeight += float.Parse(_score.text) * 1 / 10000;
         var xPosition = Random.Range(-maxWeight, maxWeight);
         var yPosition = Random.Range(minHeight, maxHeight);
         return new Vector3(xPosition, lastPlatform.transform.position.y + yPosition, 0);
