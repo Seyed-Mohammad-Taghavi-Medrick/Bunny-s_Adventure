@@ -15,9 +15,11 @@ public class Player : MonoBehaviour
     [SerializeField] private Player player;
     private float _nextFire;
     private Vector2 movment;
-
+    private Vector2 gyroMovment;
     private Rigidbody2D playerRigid;
-
+    private float dirX;
+    
+    
     // PowerUps
     public bool isJetpackenable;
     public bool isPlayerDamaged;
@@ -36,13 +38,23 @@ public class Player : MonoBehaviour
     
         // Start is called before the first frame update
         void Start()
-    {
+        {
+            Input.gyro.enabled = true;
         playerRigid = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        dirX = Input.acceleration.x * 25 ;
+        transform.position = new Vector2(Mathf.Clamp(transform.position.x, -7.5f, 7.5f), transform.position.y); 
+        
+        
+        
+        
+        
+        
         float inputX = Input.GetAxis("Horizontal");
 
 
@@ -50,7 +62,7 @@ public class Player : MonoBehaviour
 
         if (isJetpackenable)
         {
-            playerRigid.AddForce(transform.up *20, ForceMode2D.Force);
+            playerRigid.AddForce(transform.up *5, ForceMode2D.Force);
         }
     }
 
@@ -58,6 +70,8 @@ public class Player : MonoBehaviour
     {
         if (!isPlayerDamaged)
         {
+
+            playerRigid.velocity = new Vector2(dirX, 0);
             playerRigid.velocity = movment;
         }
     }
