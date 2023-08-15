@@ -102,6 +102,8 @@ MonoBehaviour:
   health: 0
   VFX: {fileID: 0}
   isHole: 1
+  stars: {fileID: 0}
+  isPalayerDamaged: 0
 --- !u!114 &5559604361242808455
 MonoBehaviour:
   m_ObjectHideFlags: 0

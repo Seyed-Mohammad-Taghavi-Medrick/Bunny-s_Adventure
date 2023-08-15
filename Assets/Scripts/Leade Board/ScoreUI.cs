@@ -1,18 +1,25 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ScoreUI : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public RowUI rowUI;
+    public ScoreManager scoreManager;
 
-    // Update is called once per frame
-    void Update()
+
+    private void Start()
     {
-        
+        var scorse = scoreManager.GetHighScore().ToArray();
+        for (int i = 0; i < scorse.Length; i++)
+        {
+            var row = Instantiate(rowUI, transform).GetComponent<RowUI>();
+
+            row.rank.text = (i + 1).ToString();
+            row.name.text = scorse[i].name;
+            row.score.text = scorse[i].score.ToString();
+        }
     }
 }

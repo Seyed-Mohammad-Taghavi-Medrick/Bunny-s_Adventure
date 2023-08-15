@@ -9,7 +9,10 @@ EditorBuildSettings:
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/Start Csene.unity
+    path: Assets/Scenes/Splash.unity
+    guid: 52473bbb4cbaf014cb77c22b392ca34d
+  - enabled: 1
+    path: Assets/Scenes/Start Screen.unity
     guid: e9ec689c713b17b49b00ac4ca133df1f
   - enabled: 1
     path: Assets/Scenes/Game.unity
@@ -21,4 +24,5 @@ EditorBuildSettings:
     path: Assets/Scenes/Options.unity
     guid: e4fb33a0fbd6886449c7a4adb913f02a
   m_configObjects:
+    com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 88b76b855b21e1144967d7a1a885eb08, type: 2}
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: c42f88f55e8a00747a5507edc89fe8bb, type: 2}

@@ -5,13 +5,33 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+[Serializable]
 public class Score : MonoBehaviour
 {
+    [SerializeField]  GameObject playerScoreHolder; 
     [SerializeField] Transform Player;
     [SerializeField] float Speed;
     [SerializeField] uint PlayerScore;
     public Text ScoreTxt;
 
+    public uint GetPlayerScore
+    {
+        get => PlayerScore;
+    }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     private void Start()
     {
         UpdateUI();
@@ -36,6 +56,9 @@ public class Score : MonoBehaviour
 
     private void UpdateUI()
     {
+        
         ScoreTxt.text = "" + PlayerScore;
+
+        playerScoreHolder.GetComponent<Text>().text = ScoreTxt.text;
     }
 }

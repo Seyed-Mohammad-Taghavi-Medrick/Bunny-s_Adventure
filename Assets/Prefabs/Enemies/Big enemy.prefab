@@ -162,7 +162,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 2
 --- !u!114 &1854461067255811169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,7 +175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba6cb0a28fd39c04396d1100415dac66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  secenSprite: {fileID: 21300000, guid: 45c7368ffeb21ad43827be5e9c8617f3, type: 2}
+  secendSprite: {fileID: 21300000, guid: 45c7368ffeb21ad43827be5e9c8617f3, type: 2}
 --- !u!1 &8357660431020118519
 GameObject:
   m_ObjectHideFlags: 0

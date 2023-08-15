@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 5022279365511470163}
   - component: {fileID: 5022279365511470162}
   - component: {fileID: 5022279365511470160}
-  - component: {fileID: 8424516245824291547}
   - component: {fileID: 635682631}
+  - component: {fileID: 3835383970568688107}
   m_Layer: 0
   m_Name: Jumping board
   m_TagString: Untagged
@@ -135,19 +135,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.72, y: 0.27}
   m_EdgeRadius: 0
---- !u!114 &8424516245824291547
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5022279365511470159}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79e40fd36fbbbaf4b90ef87732a85e0c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  power: 20
 --- !u!251 &635682631
 PlatformEffector2D:
   m_ObjectHideFlags: 0
@@ -167,3 +154,16 @@ PlatformEffector2D:
   m_UseSideFriction: 0
   m_UseSideBounce: 0
   m_SideArc: 1
+--- !u!114 &3835383970568688107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5022279365511470159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac96f3512d061ab4eab768c3fdef0287, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  power: 15
