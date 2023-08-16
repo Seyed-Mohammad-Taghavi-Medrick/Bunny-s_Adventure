@@ -62,7 +62,7 @@ public class Player : MonoBehaviour
 
         if (isJetpackenable)
         {
-            playerRigid.AddForce(transform.up *5, ForceMode2D.Force);
+            playerRigid.AddForce(transform.up *1000 * Time.deltaTime, ForceMode2D.Force);
         }
     }
 
