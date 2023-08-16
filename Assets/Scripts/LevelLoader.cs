@@ -17,7 +17,7 @@ public class LevelLoader : MonoBehaviour
     {
         scoreManagerSave = FindObjectOfType<ScoreManagerSave>();
         score = FindObjectOfType<Score>();
-        
+
         currentSceneIndext = SceneManager.GetActiveScene().buildIndex;
         if (currentSceneIndext == 0)
         {
@@ -55,10 +55,12 @@ public class LevelLoader : MonoBehaviour
     {
         SceneManager.LoadScene("LeaderBoard");
     }
+
     public void LoadLoseScreen()
     {
         SceneManager.LoadScene("Lose Screen");
     }
+
     public void LoadOptionsScreen()
     {
         SceneManager.LoadScene("Options");
@@ -71,10 +73,16 @@ public class LevelLoader : MonoBehaviour
 
     private void SaveScore()
     {
-        if (!string.IsNullOrEmpty( playerNameInputField.text))
+        if (!string.IsNullOrEmpty(playerNameInputField.text))
         {
-            scoreManagerSave.AddScore(new ScoreSimple(playerNameInputField.text,score.GetPlayerScore ));
+            if (scoreManagerSave == null)
+            {
+                scoreManagerSave.AddScore(new ScoreSimple(playerNameInputField.text, score.GetPlayerScore));
+            }
+            
         }
+        
+        
+        
     }
-    
 }
