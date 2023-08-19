@@ -21,6 +21,7 @@ public class Hole : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            other.GetComponent<Player>().isPlayerDamaged = true;
             other.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             other.GetComponent<Rigidbody2D>().gravityScale = 0;
             other.transform.position =

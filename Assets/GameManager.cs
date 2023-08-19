@@ -12,6 +12,11 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameObject lostCanvas;
 
+
+    [SerializeField] private AudioSource audioSource;
+
+    [SerializeField] private AudioClip eggThrow;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +27,12 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        if (FindObjectOfType<Enemy>().enemyDamaged)
+        {
+            PlayEggHit();
+        }
+
+
         if (FindObjectOfType<Player>().isPlayerDamaged)
         {
             StartCoroutine(KillPlayer());
@@ -57,8 +68,7 @@ public class GameManager : MonoBehaviour
         {
             if (!FindObjectOfType<Player>().isPlayerDamaged)
             {
-                
-            player.gameObject.GetComponent<BoxCollider2D>().enabled = true;
+                player.gameObject.GetComponent<BoxCollider2D>().enabled = true;
             }
         }
 
@@ -66,7 +76,7 @@ public class GameManager : MonoBehaviour
         if (FindObjectOfType<Player>().isShieldEnable)
         {
             shield.SetActive(true);
-            
+
             StartCoroutine(DisableShield());
         }
     }
@@ -84,5 +94,10 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(10);
         FindObjectOfType<Player>().gameObject.GetComponent<Player>().isShieldEnable = false;
         shield.SetActive(false);
+    }
+
+    void PlayEggHit()
+    {
+        audioSource.PlayOneShot(eggThrow);
     }
 }

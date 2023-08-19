@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2986914985116771634}
   - component: {fileID: -6484256095058783108}
   - component: {fileID: 981211933006665760}
-  - component: {fileID: -2854732582653095672}
+  - component: {fileID: -5729428314843441991}
   m_Layer: 0
   m_Name: CandyPlatform
   m_TagString: Platform
@@ -116,7 +116,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a4fbeb11245c9a418e99fc12a441d49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  power: 10
   creationChance: 1
   oneTime: 0
 --- !u!251 &981211933006665760
@@ -134,12 +133,12 @@ PlatformEffector2D:
   m_RotationalOffset: 0
   m_UseOneWay: 1
   m_UseOneWayGrouping: 0
-  m_SurfaceArc: 150
+  m_SurfaceArc: 179
   m_UseSideFriction: 0
   m_UseSideBounce: 0
   m_SideArc: 1
---- !u!70 &-2854732582653095672
-CapsuleCollider2D:
+--- !u!61 &-5729428314843441991
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -152,5 +151,15 @@ CapsuleCollider2D:
   m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.15, y: 0.31}
+    newSize: {x: 1.15, y: 0.31}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
   m_Size: {x: 1.15, y: 0.31}
-  m_Direction: 1
+  m_EdgeRadius: 0

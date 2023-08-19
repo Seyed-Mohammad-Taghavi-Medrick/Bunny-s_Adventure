@@ -2,6 +2,7 @@ using System;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UIElements;
 
 public class Enemy : MonoBehaviour
@@ -13,6 +14,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject stars;
     public bool isPalayerDamaged;
 
+    public bool enemyDamaged;
+   
     private void Start()
     {
     }
@@ -23,7 +26,10 @@ public class Enemy : MonoBehaviour
         {
             if (collision.gameObject.tag == "Egg")
             {
+                enemyDamaged = true;
+               
                 health -= 1;
+                enemyDamaged = false;
                 Destroy(collision.gameObject);
 
                 if (health <= 0)
@@ -62,4 +68,6 @@ public class Enemy : MonoBehaviour
     {
         return centerPosition;
     }
+
+   
 }
