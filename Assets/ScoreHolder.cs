@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>Legacy score-holder component retained in the scene. Its former UI synchronization code is intentionally inactive.</summary>
 public class ScoreHolder : MonoBehaviour
 {
 

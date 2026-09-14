@@ -9,6 +9,7 @@ using UnityEngine.UI;
 using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
 
+/// <summary>Owns player movement, power-up state flags, boundary wrapping, hazard detection, and player sound effects.</summary>
 public class Player : MonoBehaviour
 {
     [SerializeField] private egg[] eggs;
@@ -22,7 +23,7 @@ public class Player : MonoBehaviour
 
     public Text gyroData;
 
-    // PowerUps
+    // Power-up and damage states are read and orchestrated by GameManager and collision components.
     public bool isJetpackenable;
     public bool isPlayerDamaged;
     public bool isShieldEnable;
@@ -43,6 +44,7 @@ public class Player : MonoBehaviour
     [SerializeField] float lerpSpeed = 2f;
 
 
+    // Scene boundary markers used for horizontal world wrapping.
     [SerializeField] GameObject lSideMirror;
 
     [SerializeField] GameObject rSideMirror;
@@ -50,6 +52,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Gyroscope is enabled for the retained mobile-control experiments; current horizontal input uses UI/buttons.
         _gyro = Input.gyro;
         _gyro.enabled = true;
         playerRigid = GetComponent<Rigidbody2D>();
@@ -58,9 +61,9 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*
-        transform.position = new Vector2(Mathf.Clamp(transform.position.x, -7.5f, 7.5f), transform.position.y);
-        */
+        
+        // transform.position = new Vector2(Mathf.Clamp(transform.position.x, -7.5f, 7.5f), transform.position.y);
+        
 
 
         float inputX = Input.GetAxis("Horizontal");
@@ -70,12 +73,14 @@ public class Player : MonoBehaviour
 
         if (isJetpackenable)
         {
+            // Jetpack adds continuous upward force while GameManager keeps its timed state active.
             playerRigid.AddForce(transform.up * 1000 * Time.deltaTime, ForceMode2D.Force);
         }
     }
 
     private void FixedUpdate()
     {
+        // Exact-position boundary checks move the player to the opposite side of the play field.
         if (/*gameObject.GetComponent<BoxCollider2D>() is null &&*/
             gameObject.transform.position.x == lSideMirror.transform.position.x)
         {
@@ -97,6 +102,7 @@ public class Player : MonoBehaviour
         targetInput = Mathf.Lerp(targetInput, inputHorizontal, Time.deltaTime * lerpSpeed);
         if (!isPlayerDamaged)
         {
+            // Smooth button input to avoid abrupt horizontal translation; damaged players no longer respond.
             transform.Translate(targetInput * moveSpeed * Time.deltaTime, 0, 0);
 
 
@@ -117,6 +123,7 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        // Falling into the Platform Manager cleanup area starts the shared player-death flow.
         if (other.gameObject.tag == "Platform Manager")
         {
             isPlayerDamaged = true;
@@ -125,26 +132,31 @@ public class Player : MonoBehaviour
 
     public void PlayJumpSFX()
     {
+        // Called by ordinary Platform landings.
         audioSource.PlayOneShot(jump);
     }
 
     public void PlayspringSFX()
     {
+        // Called by Spring landings.
         audioSource.PlayOneShot(spring);
     }
 
     public void BreakAblePlatformSFX()
     {
+        // Called when a breakable platform begins its collapse sequence.
         audioSource.PlayOneShot(breakAblePlatform);
     }
 
     public void PlayJetPackSFX()
     {
+        // Uses the dedicated looping/assigned jetpack source rather than the shared one-shot source.
         jetPackAudioSource.Play(0);
     }
 
     public void HorizontalMovment(int value)
     {
+        // UI buttons pass -1/0/1 here; FixedUpdate smooths and applies the requested direction.
         inputHorizontal = value;
     }
 }

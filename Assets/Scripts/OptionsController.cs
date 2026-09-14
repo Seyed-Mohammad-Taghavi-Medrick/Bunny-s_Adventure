@@ -1,46 +1,44 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
+/// <summary>Connects the options-screen volume slider to live audio preview and persistent preferences.</summary>
 public class OptionsController : MonoBehaviour
 {
     [SerializeField] private Slider volumeSlider;
 
-    [SerializeField] private float defaultvolume = 0.8f;
+    [SerializeField] private float defaultVolume = PlayerPrefsController.DefaultMasterVolume;
 
-
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        volumeSlider.value = PlayerPrefsController.GetMasterVolume();
+        // Load without firing the listener, then subscribe and explicitly preview the saved value.
+        volumeSlider.SetValueWithoutNotify(PlayerPrefsController.GetMasterVolume());
+        volumeSlider.onValueChanged.AddListener(SetVolume);
+        SetVolume(volumeSlider.value);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDestroy()
     {
-        var musicPlayer = FindObjectOfType<MusicPlayer>();
-        if (musicPlayer)
+        // Remove the runtime listener to avoid leaving this UI object referenced after destruction.
+        volumeSlider.onValueChanged.RemoveListener(SetVolume);
+    }
 
-        {
-            musicPlayer.SetVolume(volumeSlider.value);
-        }
-        else
-        {
-            Debug.LogWarning("No music player found ....did you start from splash screen?");
-        }
+    public void SetVolume(float volume)
+    {
+        // This is a preview only; persistence occurs when the user exits via SaveAndexit.
+        AudioListener.volume = volume;
     }
 
     public void SaveAndexit()
     {
+        // Commit the selected value before returning to the main menu.
         PlayerPrefsController.SetMasterVolume(volumeSlider.value);
-
+        AudioListener.volume = volumeSlider.value;
         FindObjectOfType<LevelLoader>().LoadMainMenu();
     }
 
     public void SetDefaults()
     {
-        volumeSlider.value = defaultvolume;
+        // Assigning slider.value invokes the listener and therefore previews the default immediately.
+        volumeSlider.value = defaultVolume;
     }
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>Enemy weak-point collider: bounces the player and applies one damage to its parent enemy.</summary>
 public class HeadOfEnemy : MonoBehaviour
 {
     [SerializeField] private GameObject Parent;
@@ -21,8 +22,10 @@ public class HeadOfEnemy : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
+        // A landing player receives the standard platform-like upward bounce.
         if (other.gameObject.CompareTag("Player"))
         {
+            // Big enemies switch to their damaged sprite when their head is hit.
             PlayerRigidBody = other.gameObject.GetComponent<Rigidbody2D>();
             PlayerRigidBody.velocity = new Vector2(PlayerRigidBody.velocity.x, Platform.power);
             
@@ -44,6 +47,7 @@ public class HeadOfEnemy : MonoBehaviour
 
             if (enemy.health <= 0)
             {
+                // Spawn the death effect at the configured parent position, then remove the complete enemy hierarchy.
                 enemy.TriggerDeathVFX(Parent.transform.position);
                 Destroy(Parent);
             }

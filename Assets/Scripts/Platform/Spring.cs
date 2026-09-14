@@ -3,10 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>Platform attachment that plays a spring animation and gives a landing player a configurable vertical launch.</summary>
 public class Spring : MonoBehaviour
 {
     Rigidbody2D PlayerRigidBody;
 
+    // Upward velocity assigned to a player landing on the spring.
     [SerializeField] float power = 15f;
 
     // Start is called before the first frame update
@@ -22,12 +24,14 @@ public class Spring : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
+        // Only react to a downward landing; side/underside collisions must not launch the player.
         if (other.relativeVelocity.y <= 0 && other.gameObject.CompareTag("Player"))
         {
             GetComponent<Animator>().SetTrigger("jump");
             PlayerRigidBody = other.gameObject.GetComponent<Rigidbody2D>();
             if (PlayerRigidBody != null)
             {
+                // Preserve horizontal momentum while replacing vertical velocity with the spring impulse.
                 PlayerRigidBody.velocity = new Vector2(PlayerRigidBody.velocity.x, power);
                 PlayerRigidBody.GetComponent<Player>().PlayspringSFX();
                 if (PlayerRigidBody.velocity.y >= 0)

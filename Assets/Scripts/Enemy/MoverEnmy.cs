@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>Moves its object side-to-side using a sine wave whose range follows the camera's visible width.</summary>
 public class MoverEnmy : MonoBehaviour
 {
 
@@ -17,15 +18,18 @@ public class MoverEnmy : MonoBehaviour
     private float randomPos;
     private void Start()
     {
+        // Per-instance phase variation prevents all moving objects from oscillating in lockstep.
         randomPos = Random.Range(-1, 1);
         platform = GetComponent<Platform>();
     }
 
     void FixedUpdate()
     {
+        // Convert the lower-left screen point to world space to determine the horizontal travel limit.
 
         Vector3 Top_Left = UnityEngine.Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0));
         var maxDistance = -Top_Left.x - Offset;
+        // Keep vertical position fixed while the sine function supplies the horizontal offset.
         transform.position = new Vector3(Mathf.Sin((Time.time + randomPos) * speed / maxDistance) * maxDistance, /*platform.GetOriginPosition().y*/ gameObject.transform.position.y, 0);
 
     }

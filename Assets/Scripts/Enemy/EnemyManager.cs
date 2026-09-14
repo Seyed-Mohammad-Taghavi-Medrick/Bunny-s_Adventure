@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>Generates enemies above the current stack and replaces those that cross its cleanup trigger.</summary>
 public class EnemyManager : MonoBehaviour
 {
+    // Vertical spacing and horizontal range. Spacing tightens as score increases.
     [SerializeField] private float maxEnemyDistance = 100f;
     [SerializeField] private float minEnemyDistance = 50f;
     [SerializeField] private Text _score;
@@ -20,12 +22,14 @@ public class EnemyManager : MonoBehaviour
 
     void Start()
     {
+        // Anchor the first generated enemy to the scene-placed seed object.
         lastEnemy = firstEnemy;
         GenerateEnemies();
     }
 
     private void GenerateEnemies()
     {
+        // Successive spawn positions are relative to lastEnemy, creating an ascending sequence.
         for (int i = 0; i < enemyCount; i++)
         {
             Vector3 position = GetNextPos();
@@ -38,6 +42,7 @@ public class EnemyManager : MonoBehaviour
 
     Vector3 GetNextPos()
     {
+        // Score progression decreases gaps, increasing encounter density at higher altitude.
         minEnemyDistance = minEnemyDistance - float.Parse(_score.text) * 1 / 100;
         maxEnemyDistance = maxEnemyDistance - float.Parse(_score.text) * 1 / 100;
         Vector3 pos = new Vector3(Random.Range(-maxWeight, maxWeight),
@@ -47,6 +52,7 @@ public class EnemyManager : MonoBehaviour
 
     public void MoveUpEnemy(Enemy enemy)
     {
+        // Legacy recycle path: relocate an existing enemy and make it the next placement anchor.
         enemy.transform.position = GetNextPos();
         lastEnemy = enemy;
         enemy.SetOriginPosition(enemy.transform.position);
@@ -54,6 +60,7 @@ public class EnemyManager : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        // The active path destroys off-screen enemies and spawns one replacement rather than reusing it.
         if (collision.gameObject.tag == "Enemy")
         {
             Destroy(collision);

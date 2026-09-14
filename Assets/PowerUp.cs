@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>Base data component for generated power-up instances. It records their original spawn location.</summary>
 public class PowerUp : MonoBehaviour
 {
     private Vector3 centerPosition;
@@ -18,6 +19,7 @@ public class PowerUp : MonoBehaviour
     }
     public void SetOriginPosition(Vector3 pos)
     {
+        // Stored for potential repositioning/recycling; the current manager destroys passed pickups instead.
         centerPosition = pos;
     }
 }

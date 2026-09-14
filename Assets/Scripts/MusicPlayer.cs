@@ -1,33 +1,23 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-public class MusicPlayer : MonoBehaviour {
+/// <summary>Keeps the music object alive between scenes and applies the persisted master-volume preference.</summary>
+public class MusicPlayer : MonoBehaviour
+{
 
-    AudioSource audioSource;
-
-    // Use this for initialization
-    void Start () {
-        DontDestroyOnLoad(this);
-        audioSource = GetComponent<AudioSource>();
-        audioSource.volume = PlayerPrefsController.GetMasterVolume();
+    private void Awake()
+    {
+        // This object is intended to be created once, then continue through scene loads.
+        DontDestroyOnLoad(gameObject);
     }
-	
+
+    private void Start()
+    {
+        // Apply the saved setting when this persistent audio object first initializes.
+        SetVolume(PlayerPrefsController.GetMasterVolume());
+    }
+
     public void SetVolume(float volume)
     {
-        audioSource.volume = volume;
-        if (SceneManager.GetActiveScene().buildIndex == 2 )
-        {
-            audioSource.volume = 0;
-        }
-    }
-
-    private void Update()
-    {
-        if (SceneManager.GetActiveScene().buildIndex == 2 )
-        {
-            audioSource.volume = 0;
-        }
+        // AudioListener is global, so clamping here protects all game audio from invalid input.
+        AudioListener.volume = Mathf.Clamp01(volume);
     }
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>Platform variant that animates, falls, and destroys itself after a player lands on it.</summary>
 public class BreakablePlatform : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -17,6 +18,7 @@ public class BreakablePlatform : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        // A descending player triggers the one-way collapse and its sound effect.
         if (other.CompareTag("Player") && other.GetComponent<Rigidbody2D>().velocity.y <= 0)
         {
             StartCoroutine(BraekPlatform());
@@ -25,6 +27,7 @@ public class BreakablePlatform : MonoBehaviour
 
         IEnumerator BraekPlatform()
         {
+            // Play the break animation, enable falling physics, then remove the platform after it leaves play.
             GetComponent<Animator>().SetTrigger("Break");
             yield return new WaitForSeconds(.25f);
             GetComponent<Rigidbody2D>().gravityScale = 1.5f;

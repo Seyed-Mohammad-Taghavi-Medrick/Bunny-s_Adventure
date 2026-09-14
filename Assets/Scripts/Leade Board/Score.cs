@@ -6,8 +6,10 @@ using UnityEngine.UI;
 using TMPro;
 
 [Serializable]
+/// <summary>Tracks upward player progress as the run score and mirrors it into the in-game and holder UI texts.</summary>
 public class Score : MonoBehaviour
 {
+    // UI targets and the tracked player transform. Score is derived from the player's vertical position.
     [SerializeField]  GameObject playerScoreHolder; 
     [SerializeField] Transform Player;
     [SerializeField] float Speed;
@@ -16,6 +18,7 @@ public class Score : MonoBehaviour
 
     public uint GetPlayerScore
     {
+        // Read-only public access used when a completed run is submitted to the leaderboard.
         get => PlayerScore;
     }
 
@@ -34,6 +37,7 @@ public class Score : MonoBehaviour
     
     private void Start()
     {
+        // Show the serialized/current score immediately before the first physics update.
         UpdateUI();
     }
 
@@ -43,6 +47,7 @@ public class Score : MonoBehaviour
     {
         if (Player.position.y > transform.position.y)
         {
+            // Score and UI advance only while the player sets a new vertical high point.
             Vector3 Positions = new Vector3(transform.position.x, Player.position.y, transform.position.z);
             transform.position = Vector3.Lerp(transform.position, Positions, Speed * Time.deltaTime);
             PlayerScore = (uint)Player.position.y;
@@ -56,6 +61,7 @@ public class Score : MonoBehaviour
 
     private void UpdateUI()
     {
+        // Keep both score displays identical; the holder is the value consumed by other scene/UI wiring.
         
         ScoreTxt.text = "" + PlayerScore;
 

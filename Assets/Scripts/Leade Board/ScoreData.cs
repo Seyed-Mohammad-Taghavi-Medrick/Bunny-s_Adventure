@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
+/// <summary>JSON-serializable container for all persisted leaderboard entries.</summary>
 public class ScoreData
 {
 
@@ -11,11 +12,13 @@ public class ScoreData
 
     public ScoreData()
     {
+        // JsonUtility needs a concrete list so new score data can accept entries immediately.
         scores = new List<ScoreSimple>();
     }
 }
 
 [Serializable]
+/// <summary>One leaderboard record: player name and the score to compare against that name's best run.</summary>
 public class ScoreSimple
 {
     public string name;

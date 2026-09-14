@@ -2,22 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerPrefsController : MonoBehaviour {
-
-    const string MASTER_VOLUME_KEY = "master volume";
-   
-
-    const float MIN_VOLUME = 0f;
-    const float MAX_VOLUME = 1f;
+/// <summary>Single access point for persisting and validating the global master-volume setting.</summary>
+public class PlayerPrefsController : MonoBehaviour
+{
+    private const string MasterVolumeKey = "master volume";
+    public const float DefaultMasterVolume = 0.8f;
+    private const float MinVolume = 0f;
+    private const float MaxVolume = 1f;
 
    
 
     public static void SetMasterVolume(float volume)
     {
-        if (volume >= MIN_VOLUME && volume <= MAX_VOLUME)
+        // Reject invalid values rather than silently writing a corrupted preference.
+        if (volume >= MinVolume && volume <= MaxVolume)
         {
-            Debug.Log("Master volume set to " + volume);
-            PlayerPrefs.SetFloat(MASTER_VOLUME_KEY, volume);
+            PlayerPrefs.SetFloat(MasterVolumeKey, volume);
+            PlayerPrefs.Save();
         }
         else
         {
@@ -27,10 +28,7 @@ public class PlayerPrefsController : MonoBehaviour {
 
     public static float GetMasterVolume()
     {
-        return PlayerPrefs.GetFloat(MASTER_VOLUME_KEY);
+        // A new installation receives the configured default when no preference has been saved.
+        return PlayerPrefs.GetFloat(MasterVolumeKey, DefaultMasterVolume);
     }
-
-    
-
-   
 }

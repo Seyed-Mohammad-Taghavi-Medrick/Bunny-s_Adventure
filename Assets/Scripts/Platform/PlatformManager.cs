@@ -2,8 +2,10 @@ using System.Net.Mime;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>Generates an ascending platform path and replenishes platforms that leave its cleanup trigger.</summary>
 public class PlatformManager : MonoBehaviour
 {
+    // Initial/replenishment count, score source, and prefab configuration for platform generation.
     [SerializeField] private int platformCount = 10;
     private Platform lastPlatform;
 
@@ -20,12 +22,14 @@ public class PlatformManager : MonoBehaviour
 
     private void Start()
     {
+        // Start from the scene-placed first platform so generated heights form one continuous chain.
         lastPlatform = firstPlatform;
         GeneratePlatforms();
     }
 
     private void GeneratePlatforms()
     {
+        // Pick a random platform variant, except the guard below prevents a specific consecutive breakable combination.
         for (int i = 0; i < platformCount; i++)
         {
             var position = GetNextPosition();
@@ -38,6 +42,7 @@ public class PlatformManager : MonoBehaviour
             }
             else
             {
+                // Fall back to the simple platform when the selected shape violates that original rule.
                 lastPlatform = Instantiate(simplePlatform, position, Quaternion.identity);
             }
 
@@ -48,6 +53,7 @@ public class PlatformManager : MonoBehaviour
 
     private Vector3 GetNextPosition()
     {
+        // Score slightly widens the height range; positions remain within the configured horizontal bounds.
         minHeight += float.Parse(_score.text) * 1 / 100000;
         maxHeight += float.Parse(_score.text) * 1 / 100000;
         var xPosition = Random.Range(-maxWeight, maxWeight);
@@ -57,6 +63,7 @@ public class PlatformManager : MonoBehaviour
 
     private void MovePlatform(Platform platform)
     {
+        // Legacy pooling/recycle approach, retained though trigger handling currently destroys and respawns platforms.
         platform.transform.position = GetNextPosition();
         lastPlatform = platform;
         platform.SetOriginPosition(platform.transform.position);
@@ -65,6 +72,7 @@ public class PlatformManager : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        // Old platforms are destroyed and five new ones are appended above the current chain.
         if (collision.gameObject.tag =="Platform")
         {
             platformCount = 5;
