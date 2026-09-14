@@ -63,7 +63,8 @@ public class EnemyManager : MonoBehaviour
         // The active path destroys off-screen enemies and spawns one replacement rather than reusing it.
         if (collision.gameObject.tag == "Enemy")
         {
-            Destroy(collision);
+            // Collider بخشی از دشمن است؛ باید کل GameObject حذف شود.
+            Destroy(collision.gameObject);
             enemyCount = 1;
             GenerateEnemies();
             /*MoveUpEnemy(collision.gameObject.GetComponent<Enemy>());*/

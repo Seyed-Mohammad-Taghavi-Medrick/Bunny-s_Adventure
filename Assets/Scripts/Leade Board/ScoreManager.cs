@@ -12,8 +12,10 @@ public class ScoreManager : MonoBehaviour
    private void Awake()
    {
       // Use the same PlayerPrefs key and JSON shape as ScoreManagerSave.
-      var json = PlayerPrefs.GetString("scores", "{}");
-      sd = JsonUtility.FromJson<ScoreData>(json);
+      var json = PlayerPrefs.GetString("scores", "");
+      sd = string.IsNullOrEmpty(json) ? new ScoreData() : JsonUtility.FromJson<ScoreData>(json);
+      if (sd == null || sd.scores == null)
+         sd = new ScoreData();
    }
 
    public IEnumerable<ScoreSimple> GetHighScore()

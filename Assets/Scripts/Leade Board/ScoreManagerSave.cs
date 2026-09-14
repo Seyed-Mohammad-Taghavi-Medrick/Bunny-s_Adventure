@@ -11,9 +11,11 @@ public class ScoreManagerSave : MonoBehaviour
 
    private void Awake()
    {
-      // Missing data is represented by an empty JSON object, deserialized into the score container.
-      var json = PlayerPrefs.GetString("scores", "{}");
-      sd = JsonUtility.FromJson<ScoreData>(json);
+      // اگر داده‌ای وجود نداشت (یا خراب بود)، از یک لیست خالی شروع کن.
+      var json = PlayerPrefs.GetString("scores", "");
+      sd = string.IsNullOrEmpty(json) ? new ScoreData() : JsonUtility.FromJson<ScoreData>(json);
+      if (sd == null || sd.scores == null)
+         sd = new ScoreData();
    }
 
    public void AddScore(ScoreSimple score)
@@ -42,5 +44,6 @@ public class ScoreManagerSave : MonoBehaviour
       // Serialize the full score list as one PlayerPrefs value for later leaderboard scenes.
       var  json  = JsonUtility.ToJson(sd);
       PlayerPrefs.SetString ("scores" , json);
+      PlayerPrefs.Save();
    }
 }

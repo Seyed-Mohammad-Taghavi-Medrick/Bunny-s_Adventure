@@ -58,7 +58,8 @@ public class PowerUpManager : MonoBehaviour
         // Crossing this cleanup trigger removes an old pickup and replaces one at the top of the chain.
         if (collision.gameObject.tag == "PowerUP")
         {
-            Destroy(collision);
+            // Collider بخشی از پاورآپ است؛ باید کل GameObject حذف شود.
+            Destroy(collision.gameObject);
             powerUpCount = 1;
             GeneratePowerUp();
             /*MoveUpEnemy(collision.gameObject.GetComponent<Enemy>());*/
