@@ -13,12 +13,15 @@ using Random = UnityEngine.Random;
 public class Player : MonoBehaviour
 {
     [SerializeField] private egg[] eggs;
+    [SerializeField] Sprite playerFallingSprite;
+    [SerializeField] Sprite playerJumpingSprite;
 
     [SerializeField] AudioSource jumpAudioSource;
     [SerializeField] private Player player;
     private float _nextFire;
     private Vector2 movment;
     private Rigidbody2D playerRigid;
+    private SpriteRenderer playerSpriteRenderer;
     private Gyroscope _gyro;
 
     public Text gyroData;
@@ -56,14 +59,13 @@ public class Player : MonoBehaviour
         _gyro = Input.gyro;
         _gyro.enabled = true;
         playerRigid = GetComponent<Rigidbody2D>();
+        playerSpriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
         // transform.position = new Vector2(Mathf.Clamp(transform.position.x, -7.5f, 7.5f), transform.position.y);
-        
 
 
         float inputX = Input.GetAxis("Horizontal");
@@ -81,7 +83,7 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         // Exact-position boundary checks move the player to the opposite side of the play field.
-        if (/*gameObject.GetComponent<BoxCollider2D>() is null &&*/
+        if ( /*gameObject.GetComponent<BoxCollider2D>() is null &&*/
             gameObject.transform.position.x == lSideMirror.transform.position.x)
         {
             Vector3 newPosition = gameObject.transform.position;
@@ -89,7 +91,7 @@ public class Player : MonoBehaviour
             gameObject.transform.position = newPosition;
         }
 
-        if (/*gameObject.GetComponent<BoxCollider2D>() is null &&*/
+        if ( /*gameObject.GetComponent<BoxCollider2D>() is null &&*/
             gameObject.transform.position.x == rSideMirror.transform.position.x)
         {
             Vector3 newPosition = gameObject.transform.position;
@@ -97,8 +99,7 @@ public class Player : MonoBehaviour
             gameObject.transform.position = newPosition;
         }
 
-        
-        
+
         targetInput = Mathf.Lerp(targetInput, inputHorizontal, Time.deltaTime * lerpSpeed);
         if (!isPlayerDamaged)
         {
@@ -112,7 +113,19 @@ public class Player : MonoBehaviour
             /*gyroData.text =
                 $"Gyro rotation rate: {_gyro.rotationRate}\nGyro attitude:{_gyro.attitude}\nGyro enabled: {_gyro.enabled}";*/
         }
+
+        // Positive Y means the player is moving up; negative Y means falling down.
+        // Keep the current sprite when the vertical speed is approximately zero.
+        if (playerRigid.velocity.y < -0.01f)
+        {
+            playerSpriteRenderer.sprite = playerFallingSprite;
+        }
+        else if (playerRigid.velocity.y > 0.01f)
+        {
+            playerSpriteRenderer.sprite = playerJumpingSprite;
+        }
     }
+    
 
     private void OnCollisionEnter2D(Collision2D other)
     {
