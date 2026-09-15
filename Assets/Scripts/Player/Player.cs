@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     // این سه پرچم، وضعیت‌های موقت بازیکن هستند.
     public bool isJetpackenable;
     public bool isPlayerDamaged;
+    public bool isBeingPulledIntoHole;
     public bool isShieldEnable;
     [SerializeField] public bool isdead;
 
@@ -51,7 +52,7 @@ public class Player : MonoBehaviour
         if (isJetpackenable)
             playerRigid.AddForce(Vector2.up * 1000f * Time.fixedDeltaTime);
 
-        if (!isPlayerDamaged)
+        if (!isPlayerDamaged && !isBeingPulledIntoHole)
         {
             // Mathf.Lerp حرکت دکمه‌ای را نرم می‌کند؛ -1 چپ و 1 راست است.
             smoothInput = Mathf.Lerp(smoothInput, inputHorizontal, Time.fixedDeltaTime * lerpSpeed);

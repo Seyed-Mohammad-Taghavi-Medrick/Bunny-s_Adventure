@@ -65,9 +65,6 @@ public class GameManager : MonoBehaviour
             jetpackTimer = StartCoroutine(DisableJetPack());
         }
 
-        // هنگام بالا رفتن، برخورد با سکوها موقتاً خاموش است.
-        if (!player.isPlayerDamaged)
-            playerCollider.enabled = playerRigidbody.velocity.y <= 0f;
     }
 
     private IEnumerator DisableJetPack()

@@ -20,20 +20,28 @@ public class Hole : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        // The repeated trigger callback continuously pulls the player into the hole until the death flow takes over.
-        if (other.CompareTag("Player"))
+        if (!other.CompareTag("Player"))
+            return;
+
+        var player = other.GetComponent<Player>();
+        var playerRigidbody = other.GetComponent<Rigidbody2D>();
+        if (player == null || playerRigidbody == null || player.isPlayerDamaged)
+            return;
+
+        // Keep the collider active during this effect; GameManager disables it only once the pull completes.
+        player.isBeingPulledIntoHole = true;
+        player.isJetpackenable = false;
+        playerRigidbody.velocity = Vector2.zero;
+        playerRigidbody.gravityScale = 0;
+        other.transform.position = Vector3.Lerp(other.transform.position, transform.position, Time.deltaTime * 10f);
+        other.transform.localScale = Vector3.Lerp(other.transform.localScale, Vector3.zero, Time.deltaTime * 10f);
+        other.transform.rotation = Quaternion.Lerp(other.transform.rotation,
+            other.transform.rotation * Quaternion.Euler(0f, 0f, 2f), Time.deltaTime * 10f);
+
+        if (other.transform.localScale.sqrMagnitude <= 0.01f)
         {
-            other.GetComponent<Player>().isPlayerDamaged = true;
-            // Stop physics-driven escape and visually interpolate toward the hazard center.
-            other.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-            other.GetComponent<Rigidbody2D>().gravityScale = 0;
-            other.transform.position =
-                Vector3.Lerp(other.transform.position, gameObject.transform.position, Time.deltaTime * 10);
-            other.transform.localScale = Vector3.Lerp(other.transform.localScale, other.transform.localScale / 2,
-                Time.deltaTime * 10);
-            other.gameObject.transform.rotation = Quaternion.Lerp(other.transform.rotation,
-                other.transform.rotation * quaternion.RotateZ(2),
-                Time.deltaTime * 10);
+            player.isBeingPulledIntoHole = false;
+            player.isPlayerDamaged = true;
         }
     }
 }
