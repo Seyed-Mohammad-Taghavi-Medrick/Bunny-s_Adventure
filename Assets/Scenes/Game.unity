@@ -701,7 +701,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 1353968034}
-  distance: 0.25
+  distance: 0.1
   otherSide: {fileID: 828806332}
 --- !u!61 &285557031
 BoxCollider2D:
@@ -802,7 +802,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 557, y: 0}
+  m_AnchoredPosition: {x: 45, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &317855782
@@ -1284,7 +1284,7 @@ MonoBehaviour:
   _score: {fileID: 1775765077}
   enemyPrefabs:
   - {fileID: 1520477783678111211, guid: 0267271f14a85d243abcd8353426ace5, type: 3}
-  - {fileID: 8178263446354750834, guid: 314d4200a4797bf469497c407c462093, type: 3}
+  - {fileID: 1854461067255811169, guid: 314d4200a4797bf469497c407c462093, type: 3}
   - {fileID: 5818938666103391516, guid: 9e23918315957b448bcc3032718ba0aa, type: 3}
   enemyCount: 20
   maxWeight: 2.5
@@ -1524,17 +1524,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mover enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 2381788577456475542, guid: 0267271f14a85d243abcd8353426ace5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3326059086115716262, guid: 0267271f14a85d243abcd8353426ace5, type: 3}
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3326059086115716262, guid: 0267271f14a85d243abcd8353426ace5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.0216627
+      value: 0.02
       objectReference: {fileID: 0}
     - target: {fileID: 3326059086115716262, guid: 0267271f14a85d243abcd8353426ace5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 135.7
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3326059086115716262, guid: 0267271f14a85d243abcd8353426ace5, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1664,7 +1668,7 @@ RectTransform:
   m_GameObject: {fileID: 753871675}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 285557034}
@@ -1881,7 +1885,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -557, y: 0}
+  m_AnchoredPosition: {x: -45, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &828806334
@@ -1897,7 +1901,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 1353968034}
-  distance: -0.25
+  distance: -0.1
   otherSide: {fileID: 285557029}
 --- !u!61 &828806335
 BoxCollider2D:
@@ -2047,17 +2051,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18939e6e07522924d8fb95de2b05f196, type: 3}
---- !u!114 &947062330 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1987511048165699840, guid: 445a8843b44efc4458a75c06463a3f9e, type: 3}
-  m_PrefabInstance: {fileID: 1832213884564458364}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0895bce9f1a99ad439f52fc967676625, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1016691154
 GameObject:
   m_ObjectHideFlags: 0
@@ -2487,6 +2480,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 519420032}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1225283208 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5932263944116930270, guid: 445a8843b44efc4458a75c06463a3f9e, type: 3}
+  m_PrefabInstance: {fileID: 1832213884564458364}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1cd79fad8370594a851c90cbae6a697, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1301025167
 GameObject:
   m_ObjectHideFlags: 0
@@ -2522,11 +2526,11 @@ MonoBehaviour:
   minPowerUpDistance: 50
   _score: {fileID: 1775765077}
   powerUpPrefab:
-  - {fileID: 1987511048165699840, guid: 445a8843b44efc4458a75c06463a3f9e, type: 3}
-  - {fileID: 7774006227431695860, guid: 7e4cfc4ea04692e48a5e2ee7e43730f5, type: 3}
+  - {fileID: 5932263944116930270, guid: 445a8843b44efc4458a75c06463a3f9e, type: 3}
+  - {fileID: -6262838316218633207, guid: 7e4cfc4ea04692e48a5e2ee7e43730f5, type: 3}
   powerUpCount: 5
   maxWeight: 2.5
-  firstPowerUp: {fileID: 947062330}
+  firstPowerUp: {fileID: 1225283208}
 --- !u!4 &1301025169
 Transform:
   m_ObjectHideFlags: 0
@@ -2640,7 +2644,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1335459474}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5378d2de699fd2640926a97b4500110f, type: 3}
+  m_Script: {fileID: 11500000, guid: 395439ede3c80d74aab143575424ffc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &1335459476

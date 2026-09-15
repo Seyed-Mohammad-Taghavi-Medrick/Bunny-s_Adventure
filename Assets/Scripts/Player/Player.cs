@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -55,12 +56,21 @@ public class Player : MonoBehaviour
         if (!isPlayerDamaged && !isBeingPulledIntoHole)
         {
             // Mathf.Lerp حرکت دکمه‌ای را نرم می‌کند؛ -1 چپ و 1 راست است.
-            smoothInput = Mathf.Lerp(smoothInput, inputHorizontal, Time.fixedDeltaTime * lerpSpeed);
+            int keyboardHorizontal = 0;
+            if (Input.GetKey(KeyCode.A))
+                keyboardHorizontal--;
+            if (Input.GetKey(KeyCode.D))
+                keyboardHorizontal++;
+
+            int horizontalInput = Mathf.Clamp(inputHorizontal + keyboardHorizontal, -1, 1);
+            smoothInput = Mathf.Lerp(smoothInput, horizontalInput, Time.fixedDeltaTime * lerpSpeed);
             transform.Translate(Vector2.right * (smoothInput * moveSpeed * Time.fixedDeltaTime));
         }
 
         UpdateSprite();
     }
+
+    
 
     private void UpdateSprite()
     {

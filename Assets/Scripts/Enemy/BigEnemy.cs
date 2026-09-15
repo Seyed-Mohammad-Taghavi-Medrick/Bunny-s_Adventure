@@ -3,28 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-/// <summary>Visual extension for multi-hit enemies: swaps to a damaged sprite just before the final egg impact.</summary>
-public class BigEnemy : MonoBehaviour
+/// <summary>Multi-hit enemy that reuses Enemy combat behavior and changes appearance when damaged.</summary>
+public class BigEnemy : Enemy
 {
-    [FormerlySerializedAs("secenSprite")] [SerializeField] public Sprite secendSprite;
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
+    [FormerlySerializedAs("secenSprite")] [SerializeField] private Sprite damagedSprite;
 
-    // Update is called once per frame
-    void Update()
+    public override void TakeDamage(int damage)
     {
-    }
+        // The sprite changes only when this hit leaves the enemy alive at one health.
+        if (health - damage == 1 && damagedSprite != null && TryGetComponent<SpriteRenderer>(out var spriteRenderer))
+            spriteRenderer.sprite = damagedSprite;
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        // Enemy processes the actual health loss; this component only changes the visual state at one health.
-        if (collision.gameObject.CompareTag("Egg") && GetComponent<Enemy>().health == 1)
-        {
-            GetComponent<SpriteRenderer>().sprite = secendSprite;
-        }
-
-       
+        base.TakeDamage(damage);
     }
 }

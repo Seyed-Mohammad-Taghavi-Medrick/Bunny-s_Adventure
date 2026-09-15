@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1665114660826416900}
   - component: {fileID: 606573949773983134}
-  - component: {fileID: 8178263446354750834}
   - component: {fileID: 920939513565694429}
   - component: {fileID: 7954418497075908470}
   - component: {fileID: 7149905460429015166}
@@ -91,24 +90,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8178263446354750834
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6718569285482992531}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 164d76550f000f247847da0471b68def, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 2
-  VFX: {fileID: 1906222994913036, guid: 740c2b3187d56c341b8cb78e8aa925c5, type: 3}
-  isHole: 0
-  stars: {fileID: 0}
-  isPalayerDamaged: 0
-  enemyDamaged: 0
 --- !u!95 &920939513565694429
 Animator:
   serializedVersion: 5
@@ -179,6 +160,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba6cb0a28fd39c04396d1100415dac66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 2
+  VFX: {fileID: 1906222994913036, guid: 740c2b3187d56c341b8cb78e8aa925c5, type: 3}
+  isHole: 0
   secendSprite: {fileID: 21300000, guid: 45c7368ffeb21ad43827be5e9c8617f3, type: 2}
 --- !u!82 &-7698970978135392832
 AudioSource:

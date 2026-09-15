@@ -1,27 +1,50 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
-/// <summary>Read-only leaderboard service that loads saved scores and exposes them in descending order.</summary>
 public class ScoreManager : MonoBehaviour
 {
-   private ScoreData sd;
+    private const string ScoresKey = "scores";
+    private const int MaxScores = 10;
 
-   private void Awake()
-   {
-      // Use the same PlayerPrefs key and JSON shape as ScoreManagerSave.
-      var json = PlayerPrefs.GetString("scores", "");
-      sd = string.IsNullOrEmpty(json) ? new ScoreData() : JsonUtility.FromJson<ScoreData>(json);
-      if (sd == null || sd.scores == null)
-         sd = new ScoreData();
-   }
+    private ScoreData scoreData;
 
-   public IEnumerable<ScoreSimple> GetHighScore()
-   {
-      // Deferred LINQ ordering is consumed by ScoreUI when it creates rows.
-      return sd.scores.OrderByDescending(x => x.score);
-   }
+    private void Awake()
+    {
+        string json = PlayerPrefs.GetString(ScoresKey, "");
+        scoreData = string.IsNullOrEmpty(json) ? new ScoreData() : JsonUtility.FromJson<ScoreData>(json);
 
+        if (scoreData == null || scoreData.scores == null)
+            scoreData = new ScoreData();
+
+        SortScores();
+    }
+
+    public void AddScore(string playerName, int playerScore)
+    {
+        if (string.IsNullOrWhiteSpace(playerName))
+            return;
+
+        scoreData.scores.Add(new ScoreSimple(playerName, playerScore));
+        SortScores();
+        SaveScores();
+    }
+
+    public List<ScoreSimple> GetHighScores()
+    {
+        return scoreData.scores;
+    }
+
+    private void SortScores()
+    {
+        scoreData.scores.Sort((first, second) => second.score.CompareTo(first.score));
+
+        if (scoreData.scores.Count > MaxScores)
+            scoreData.scores.RemoveRange(MaxScores, scoreData.scores.Count - MaxScores);
+    }
+
+    private void SaveScores()
+    {
+        PlayerPrefs.SetString(ScoresKey, JsonUtility.ToJson(scoreData));
+        PlayerPrefs.Save();
+    }
 }

@@ -34,23 +34,9 @@ public class HeadOfEnemy : MonoBehaviour
 
         if (other.gameObject.CompareTag("Player"))
         {
-            if (GetComponentInParent<BigEnemy>())
-            {
-                GetComponentInParent<SpriteRenderer>().sprite = GetComponentInParent<BigEnemy>().secendSprite;
-            }
-
             var enemy = GetComponentInParent<Enemy>();
-
-
-            enemy.health -= 1;
-
-
-            if (enemy.health <= 0)
-            {
-                // Spawn the death effect at the configured parent position, then remove the complete enemy hierarchy.
-                enemy.TriggerDeathVFX(Parent.transform.position);
-                Destroy(Parent);
-            }
+            if (enemy != null)
+                enemy.TakeDamage(1);
         }
     }
 }

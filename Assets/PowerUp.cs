@@ -2,21 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>Base data component for generated power-up instances. It records their original spawn location.</summary>
+/// <summary>Base class for all generated power-ups. It provides common placement and pickup handling.</summary>
 public class PowerUp : MonoBehaviour
 {
     private Vector3 centerPosition;
-    // Start is called before the first frame update
-    void Start()
+
+    protected virtual void OnTriggerEnter2D(Collider2D other)
     {
-        
+        if (other.TryGetComponent<Player>(out var player))
+            Apply(player);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    /// <summary>Override in a concrete pickup to grant its player effect.</summary>
+    protected virtual void Apply(Player player) { }
+
     public void SetOriginPosition(Vector3 pos)
     {
         // Stored for potential repositioning/recycling; the current manager destroys passed pickups instead.

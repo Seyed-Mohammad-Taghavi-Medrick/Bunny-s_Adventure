@@ -25,6 +25,18 @@ public class PowerUpManager : MonoBehaviour
     {
         // Generation is chained from the known first pickup, so new objects continue upward from it.
         lastPowerUp = firstPowerUp;
+
+        if (lastPowerUp == null)
+        {
+            lastPowerUp = CreatePowerUp(transform.position);
+            if (lastPowerUp == null)
+            {
+                Debug.LogError("PowerUpManager needs at least one PowerUp prefab assigned.", this);
+                enabled = false;
+                return;
+            }
+        }
+
         GeneratePowerUp();
     }
 
@@ -35,10 +47,30 @@ public class PowerUpManager : MonoBehaviour
         {
             Vector3 position = GetNextPos();
 
-            PowerUp powerUp = powerUpPrefab[Random.Range(0, powerUpPrefab.Length)];
-            lastPowerUp = Instantiate(powerUp, position, Quaternion.identity);
+            lastPowerUp = CreatePowerUp(position);
+            if (lastPowerUp == null)
+            {
+                Debug.LogError("PowerUpManager could not find a valid PowerUp prefab.", this);
+                enabled = false;
+                return;
+            }
             lastPowerUp.SetOriginPosition(position);
         }
+    }
+
+    private PowerUp CreatePowerUp(Vector3 position)
+    {
+        if (powerUpPrefab == null || powerUpPrefab.Length == 0)
+            return null;
+
+        for (int attempt = 0; attempt < powerUpPrefab.Length; attempt++)
+        {
+            PowerUp prefab = powerUpPrefab[Random.Range(0, powerUpPrefab.Length)];
+            if (prefab != null)
+                return Instantiate(prefab, position, Quaternion.identity);
+        }
+
+        return null;
     }
 
 

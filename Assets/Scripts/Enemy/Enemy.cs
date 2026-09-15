@@ -1,69 +1,53 @@
-using System;
-using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
-using UnityEngine.UIElements;
 
 /// <summary>Defines an enemy's health, collision responses, optional hole behavior, and death visual effect.</summary>
 public class Enemy : MonoBehaviour
 {
     private Vector3 centerPosition;
     // Inspector-configured combat/visual settings shared by normal and large enemy prefabs.
-    [SerializeField] public int health;
-    [SerializeField] public GameObject VFX;
-    [SerializeField] public bool isHole;
-    [SerializeField] private GameObject stars;
-    public bool isPalayerDamaged;
+    [SerializeField] protected int health;
+    [FormerlySerializedAs("VFX")] [SerializeField] private GameObject vfx;
+    [SerializeField] private bool isHole;
 
-    public bool enemyDamaged;
-   
-    private void Start()
-    {
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         // Hole enemies delegate their player interaction to Hole; normal enemies process eggs and player contact here.
-        if (!isHole)
+        if (isHole)
+            return;
+
+        if (collision.CompareTag("Egg"))
         {
-            if (collision.gameObject.tag == "Egg")
-            {
-                // Projectile impact consumes the egg and subtracts one health point.
-                enemyDamaged = true;
-               
-                health -= 1;
-                enemyDamaged = false;
-                Destroy(collision.gameObject);
-
-                if (health <= 0)
-                {
-                    // Death VFX is spawned before the enemy object is removed.
-                    TriggerDeathVFX(transform.position);
-                    Destroy(gameObject);
-                }
-            }
-
-            if (collision.gameObject.tag == "Player")
-            {
-                // Shielded players can pass through enemies without entering the death state.
-                if (!(FindObjectOfType<Player>().isShieldEnable))
-                {
-                    
-                FindObjectOfType<Player>().isPlayerDamaged = true;
-                }
-
-                /*stars = collision.GetComponentInChildren<Stars>().gameObject;
-                stars.SetActive(true);*/
-                /*TriggerDeathVFX(collision.transform.position);*/
-            }
+            TakeDamage(1);
+            Destroy(collision.gameObject);
+            return;
         }
+
+        if (collision.CompareTag("Player") &&
+            collision.TryGetComponent<Player>(out var player) &&
+            !player.isShieldEnable && !player.isJetpackenable)
+            player.isPlayerDamaged = true;
+    }
+
+    /// <summary>Shared damage entry point for projectiles and enemy weak points.</summary>
+    public virtual void TakeDamage(int damage)
+    {
+        health -= damage;
+
+        if (health <= 0)
+            Die();
+    }
+
+    protected virtual void Die()
+    {
+        TriggerDeathVFX(transform.position);
+        Destroy(gameObject);
     }
 
     public void TriggerDeathVFX(Vector3 targetPosition)
     {
-        // Kept public so HeadOfEnemy can use the same visual death path.
-        Instantiate(VFX, targetPosition, quaternion.identity);
+        if (vfx != null)
+            Instantiate(vfx, targetPosition, Quaternion.identity);
     }
 
     public void SetOriginPosition(Vector3 pos)

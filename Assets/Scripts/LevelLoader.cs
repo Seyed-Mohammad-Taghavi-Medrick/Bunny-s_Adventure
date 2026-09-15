@@ -10,13 +10,13 @@ public class LevelLoader : MonoBehaviour
     [SerializeField] private InputField playerNameInputField;
 
     private int currentSceneIndext;
-    private ScoreManagerSave scoreManagerSave;
+    private ScoreManager scoreManager;
     private Score score;
 
     private void Start()
     {
         currentSceneIndext = SceneManager.GetActiveScene().buildIndex;
-        scoreManagerSave = FindObjectOfType<ScoreManagerSave>();
+        scoreManager = FindObjectOfType<ScoreManager>();
         score = FindObjectOfType<Score>();
 
         if (currentSceneIndext == 0)
@@ -52,11 +52,11 @@ public class LevelLoader : MonoBehaviour
     private void SaveScore()
     {
         // این دو شیء فقط در صحنه‌ی پایان بازی وجود دارند؛ در منو چیزی ذخیره نمی‌کنیم.
-        if (scoreManagerSave == null || score == null || playerNameInputField == null)
+        if (scoreManager == null || score == null || playerNameInputField == null)
             return;
 
         string playerName = playerNameInputField.text.Trim();
         if (!string.IsNullOrEmpty(playerName))
-            scoreManagerSave.AddScore(new ScoreSimple(playerName, score.GetPlayerScore));
+            scoreManager.AddScore(playerName, (int)score.GetPlayerScore);
     }
 }

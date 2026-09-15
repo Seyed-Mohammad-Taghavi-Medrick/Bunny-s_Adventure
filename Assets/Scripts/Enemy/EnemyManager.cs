@@ -24,6 +24,18 @@ public class EnemyManager : MonoBehaviour
     {
         // Anchor the first generated enemy to the scene-placed seed object.
         lastEnemy = firstEnemy;
+
+        if (lastEnemy == null)
+        {
+            lastEnemy = CreateEnemy(transform.position);
+            if (lastEnemy == null)
+            {
+                Debug.LogError("EnemyManager needs at least one Enemy prefab assigned.", this);
+                enabled = false;
+                return;
+            }
+        }
+
         GenerateEnemies();
     }
 
@@ -34,10 +46,30 @@ public class EnemyManager : MonoBehaviour
         {
             Vector3 position = GetNextPos();
 
-            Enemy enemy = enemyPrefabs[Random.Range(0, enemyPrefabs.Length)];
-            lastEnemy = Instantiate(enemy, position, Quaternion.identity);
+            lastEnemy = CreateEnemy(position);
+            if (lastEnemy == null)
+            {
+                Debug.LogError("EnemyManager could not find a valid Enemy prefab.", this);
+                enabled = false;
+                return;
+            }
             lastEnemy.SetOriginPosition(position);
         }
+    }
+
+    private Enemy CreateEnemy(Vector3 position)
+    {
+        if (enemyPrefabs == null || enemyPrefabs.Length == 0)
+            return null;
+
+        for (int attempt = 0; attempt < enemyPrefabs.Length; attempt++)
+        {
+            Enemy prefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Length)];
+            if (prefab != null)
+                return Instantiate(prefab, position, Quaternion.identity);
+        }
+
+        return null;
     }
 
     Vector3 GetNextPos()
