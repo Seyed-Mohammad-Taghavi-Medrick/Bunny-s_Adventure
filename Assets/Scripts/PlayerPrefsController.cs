@@ -1,6 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
+/* Script: Saves, validates, and applies the global master-volume setting.
+   Cheat sheet: static members belong to the class; PlayerPrefs stores simple local values; Mathf.Clamp limits a number to a range. */
 
 /// <summary>Single access point for persisting and validating the global master-volume setting.</summary>
 public class PlayerPrefsController : MonoBehaviour
@@ -14,21 +15,26 @@ public class PlayerPrefsController : MonoBehaviour
 
     public static void SetMasterVolume(float volume)
     {
-        // Reject invalid values rather than silently writing a corrupted preference.
-        if (volume >= MinVolume && volume <= MaxVolume)
-        {
-            PlayerPrefs.SetFloat(MasterVolumeKey, volume);
-            PlayerPrefs.Save();
-        }
-        else
-        {
-            Debug.LogError("Master volume is out of range");
-        }
+        float clampedVolume = Mathf.Clamp(volume, MinVolume, MaxVolume);
+        PlayerPrefs.SetFloat(MasterVolumeKey, clampedVolume);
+        PlayerPrefs.Save();
+        ApplyMasterVolume();
     }
 
     public static float GetMasterVolume()
     {
         // A new installation receives the configured default when no preference has been saved.
-        return PlayerPrefs.GetFloat(MasterVolumeKey, DefaultMasterVolume);
+        return Mathf.Clamp(PlayerPrefs.GetFloat(MasterVolumeKey, DefaultMasterVolume), MinVolume, MaxVolume);
+    }
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    private static void ApplySavedMasterVolumeOnStartup()
+    {
+        ApplyMasterVolume();
+    }
+
+    public static void ApplyMasterVolume()
+    {
+        AudioListener.volume = GetMasterVolume();
     }
 }

@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/* Script: Breaks, falls, and destroys itself when a descending player triggers it.
+   Cheat sheet: StartCoroutine runs delayed steps; WaitForSeconds pauses a coroutine; gravityScale controls 2D gravity. */
+
 /// <summary>Platform variant that animates, falls, and destroys itself after a player lands on it.</summary>
 public class BreakablePlatform : MonoBehaviour
 {

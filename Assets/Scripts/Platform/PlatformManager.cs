@@ -2,6 +2,9 @@ using System.Net.Mime;
 using UnityEngine;
 using UnityEngine.UI;
 
+/* Script: Generates an upward path of platforms and replaces platforms that leave the play area.
+   Cheat sheet: Prefab arrays hold spawn choices; Instantiate creates a prefab copy; private limits access to this class. */
+
 /// <summary>Generates an ascending platform path and replenishes platforms that leave its cleanup trigger.</summary>
 public class PlatformManager : MonoBehaviour
 {

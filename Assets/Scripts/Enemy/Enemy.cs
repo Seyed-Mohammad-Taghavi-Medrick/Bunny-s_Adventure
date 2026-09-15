@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.Serialization;
 
+/* Script: Base enemy with health, projectile/player collision logic, optional hole behavior, and death effects.
+   Cheat sheet: virtual methods can be overridden by child classes; TryGetComponent safely reads a component; protected is visible to children. */
+
 /// <summary>Defines an enemy's health, collision responses, optional hole behavior, and death visual effect.</summary>
 public class Enemy : MonoBehaviour
 {

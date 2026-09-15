@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/* Script: Base platform that bounces a descending player unless a special platform component handles the landing.
+   Cheat sheet: static data is shared by all instances; GetComponentInChildren searches child objects; serialized fields are set in Inspector. */
+
 /// <summary>Base platform behavior: bounces a landing player unless a specialized spring/jumping-board component handles it.</summary>
 public class Platform : MonoBehaviour
 {

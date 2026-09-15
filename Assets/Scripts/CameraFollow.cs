@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/* Script: Smoothly moves the camera upward when the player reaches a higher point.
+   Cheat sheet: FixedUpdate is suited to physics-timed movement; Vector3.Lerp creates smooth interpolation; transform stores position and rotation. */
+
 /// <summary>Raises the camera smoothly to follow upward player progress, without moving it back down.</summary>
 public class CameraFollow : MonoBehaviour
 {

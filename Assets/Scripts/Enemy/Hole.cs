@@ -5,6 +5,9 @@ using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 
+/* Script: Pulls a player into a hole, then marks the player as damaged after the visual effect finishes.
+   Cheat sheet: OnTriggerStay2D runs each physics step during overlap; Vector3.Lerp smooths movement and scale; return exits early. */
+
 /// <summary>Hazard trigger that kills the player and animates a pull/shrink/rotation effect while they remain inside it.</summary>
 public class Hole : MonoBehaviour
 {

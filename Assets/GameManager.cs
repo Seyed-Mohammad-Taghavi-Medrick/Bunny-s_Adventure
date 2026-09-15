@@ -1,10 +1,10 @@
 using System.Collections;
 using UnityEngine;
 
-/// <summary>
-/// کنترل‌کننده‌ی وضعیت‌های کلی بازی: مرگ بازیکن و پاورآپ‌ها.
-/// هر وضعیت فقط یک Coroutine فعال دارد؛ بنابراین صدا و تایمرها تکراری اجرا نمی‌شوند.
-/// </summary>
+/* Script: Coordinates player death plus timed shield and jetpack effects.
+   Cheat sheet: Awake caches components; Coroutine pauses work with yield; SetActive shows or hides a GameObject. */
+
+/// <summary>Coordinates player death and the timed shield and jetpack states.</summary>
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private AudioClip loseAudio;
@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        // این اجزا در ابتدای بازی یک‌بار پیدا می‌شوند، نه در هر فریم.
+        // Cache physics components once instead of searching for them every frame.
         playerRigidbody = player.GetComponent<Rigidbody2D>();
         playerCollider = player.GetComponent<Collider2D>();
     }
@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
         playerCollider.enabled = false;
         playerRigidbody.velocity = Vector2.down * 10f;
 
-        if (loseAudio != null)
+        if (loseAudio != null && audioSource != null)
             audioSource.PlayOneShot(loseAudio);
 
         yield return new WaitForSeconds(1f);
@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour
     {
         jetpack.SetActive(player.isJetpackenable);
 
-        if (!player.isJetpackenable && player.jetPackAudioSource.isPlaying)
+        if (!player.isJetpackenable && player.jetPackAudioSource != null && player.jetPackAudioSource.isPlaying)
             player.jetPackAudioSource.Stop();
 
         if (player.isJetpackenable && jetpackTimer == null)

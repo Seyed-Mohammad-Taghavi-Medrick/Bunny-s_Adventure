@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/* Script: Generates enemies above the player path and replaces enemies that leave the play area.
+   Cheat sheet: Random.Range selects spawn positions and prefabs; Destroy removes a GameObject; a for loop repeats generation. */
+
 /// <summary>Generates enemies above the current stack and replaces those that cross its cleanup trigger.</summary>
 public class EnemyManager : MonoBehaviour
 {
@@ -95,7 +98,7 @@ public class EnemyManager : MonoBehaviour
         // The active path destroys off-screen enemies and spawns one replacement rather than reusing it.
         if (collision.gameObject.tag == "Enemy")
         {
-            // Collider بخشی از دشمن است؛ باید کل GameObject حذف شود.
+            // The collider belongs to the enemy, so remove its whole GameObject.
             Destroy(collision.gameObject);
             enemyCount = 1;
             GenerateEnemies();

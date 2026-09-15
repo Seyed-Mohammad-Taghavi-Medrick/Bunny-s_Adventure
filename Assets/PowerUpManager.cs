@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/* Script: Builds an upward sequence of power-up pickups and replaces pickups that leave the play area.
+   Cheat sheet: Random.Range picks values or array indexes; Instantiate makes a prefab copy; OnTriggerEnter2D reacts to trigger overlap. */
+
 /// <summary>Builds a vertical chain of power-up pickups and replenishes it as pickups leave the active area.</summary>
 public class PowerUpManager : MonoBehaviour
 {
@@ -90,7 +93,7 @@ public class PowerUpManager : MonoBehaviour
         // Crossing this cleanup trigger removes an old pickup and replaces one at the top of the chain.
         if (collision.gameObject.tag == "PowerUP")
         {
-            // Collider بخشی از پاورآپ است؛ باید کل GameObject حذف شود.
+            // The collider belongs to the pickup, so remove its whole GameObject.
             Destroy(collision.gameObject);
             powerUpCount = 1;
             GeneratePowerUp();

@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/* Script: Defines an enemy weak point that bounces the player and damages its parent enemy.
+   Cheat sheet: GetComponentInParent finds a parent component; collision events are sent by Unity physics; null check avoids missing-reference errors. */
+
 /// <summary>Enemy weak-point collider: bounces the player and applies one damage to its parent enemy.</summary>
 public class HeadOfEnemy : MonoBehaviour
 {

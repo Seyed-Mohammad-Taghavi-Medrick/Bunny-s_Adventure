@@ -2,6 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+/* Script: Moves an egg projectile forward and removes it after its lifetime ends.
+   Cheat sheet: Start runs once after creation; transform.up follows object rotation; Destroy removes an object after a delay. */
 using UnityEngine.PlayerLoop;
 
 /// <summary>Simple upward-moving projectile spawned by Shooter. Collision and destruction are handled by enemies.</summary>

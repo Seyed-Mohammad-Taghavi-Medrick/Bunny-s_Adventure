@@ -3,7 +3,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-/// <summary>بارگذاری صحنه‌ها و ذخیره‌ی امتیاز پایان هر دور بازی.</summary>
+/* Script: Loads game scenes and saves a finished run to the leaderboard.
+   Cheat sheet: SceneManager changes scenes; FindObjectOfType finds a scene component; Trim removes outer spaces from text. */
+
+/// <summary>Loads scenes and saves a completed run score.</summary>
 public class LevelLoader : MonoBehaviour
 {
     [SerializeField] private int timeToWait;
@@ -51,7 +54,7 @@ public class LevelLoader : MonoBehaviour
 
     private void SaveScore()
     {
-        // این دو شیء فقط در صحنه‌ی پایان بازی وجود دارند؛ در منو چیزی ذخیره نمی‌کنیم.
+        // These objects exist only after a run; menu scenes have no score to save.
         if (scoreManager == null || score == null || playerNameInputField == null)
             return;
 

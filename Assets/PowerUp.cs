@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/* Script: Base class for every power-up, with shared player detection and an overridable effect method.
+   Cheat sheet: protected is available to child classes; virtual allows children to customize a method; TryGetComponent safely finds a component. */
+
 /// <summary>Base class for all generated power-ups. It provides common placement and pickup handling.</summary>
 public class PowerUp : MonoBehaviour
 {

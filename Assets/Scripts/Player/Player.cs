@@ -2,17 +2,17 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-/// <summary>
-/// رفتار اصلی بازیکن: حرکت افقی با دکمه‌های UI، نیروی جت‌پک، ظاهر پرش/سقوط و صداها.
-/// وضعیت‌های عمومی پایین توسط Pickupها و GameManager خوانده یا تغییر داده می‌شوند.
-/// </summary>
+/* Script: Controls player movement, jetpack force, jump/fall sprites, damage state, and player sounds.
+   Cheat sheet: RequireComponent enforces required components; Rigidbody2D handles 2D physics; Mathf.Lerp smooths a changing value. */
+
+/// <summary>Controls player movement, temporary states, visuals, and sound effects.</summary>
 [RequireComponent(typeof(Rigidbody2D), typeof(SpriteRenderer))]
 public class Player : MonoBehaviour
 {
     [SerializeField] Sprite playerFallingSprite;
     [SerializeField] Sprite playerJumpingSprite;
 
-    // این سه پرچم، وضعیت‌های موقت بازیکن هستند.
+    // These flags are shared temporary states used by pickups, hazards, and GameManager.
     public bool isJetpackenable;
     public bool isPlayerDamaged;
     public bool isBeingPulledIntoHole;
@@ -32,7 +32,7 @@ public class Player : MonoBehaviour
     [SerializeField] float moveSpeed = 5f;
     [SerializeField] float lerpSpeed = 2f;
 
-    // فیلدهای باقی‌مانده برای سازگاری با اتصال‌های قبلی Inspector نگه داشته شده‌اند.
+    // Legacy Inspector references are kept so existing scene bindings remain valid.
     public Text gyroData;
     [SerializeField] GameObject lSideMirror;
     [SerializeField] GameObject rSideMirror;
@@ -55,7 +55,7 @@ public class Player : MonoBehaviour
 
         if (!isPlayerDamaged && !isBeingPulledIntoHole)
         {
-            // Mathf.Lerp حرکت دکمه‌ای را نرم می‌کند؛ -1 چپ و 1 راست است.
+            // Lerp smooths button input; -1 means left and 1 means right.
             int keyboardHorizontal = 0;
             if (Input.GetKey(KeyCode.A))
                 keyboardHorizontal--;
@@ -82,7 +82,7 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // عبور از محدوده‌ی پایین صفحه یعنی بازیکن سقوط کرده است.
+        // Entering the lower cleanup area means the player fell off-screen.
         if (other.CompareTag("Platform Manager"))
             isPlayerDamaged = true;
     }
@@ -93,12 +93,12 @@ public class Player : MonoBehaviour
 
     public void PlayJetPackSFX()
     {
-        // فقط اگر در حال پخش نیست شروع کن؛ از شروع‌شدن مجدد صدا در هر فریم جلوگیری می‌شود.
+        // Start the loop only once; this prevents restarting the sound every frame.
         if (!jetPackAudioSource.isPlaying)
             jetPackAudioSource.Play();
     }
 
-    /// <summary>تابع متصل به دکمه‌های چپ و راست UI. مقدار باید -1، 0 یا 1 باشد.</summary>
+    /// <summary>UI button callback. Value should be -1, 0, or 1.</summary>
     public void HorizontalMovment(int value)
     {
         inputHorizontal = Mathf.Clamp(value, -1, 1);

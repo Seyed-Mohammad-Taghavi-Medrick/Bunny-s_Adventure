@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
+/* Script: Enemy variant that changes sprite when damaged while reusing the base enemy combat logic.
+   Cheat sheet: inheritance extends Enemy; base.TakeDamage calls the parent method; override customizes inherited behavior. */
+
 /// <summary>Multi-hit enemy that reuses Enemy combat behavior and changes appearance when damaged.</summary>
 public class BigEnemy : Enemy
 {

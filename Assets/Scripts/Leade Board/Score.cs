@@ -5,6 +5,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+/* Script: Converts the player's highest vertical progress into a score and updates the score UI.
+   Cheat sheet: property get exposes read-only data; uint stores non-negative whole numbers; FixedUpdate follows the physics tick. */
+
 [Serializable]
 /// <summary>Tracks upward player progress as the run score and mirrors it into the in-game and holder UI texts.</summary>
 public class Score : MonoBehaviour

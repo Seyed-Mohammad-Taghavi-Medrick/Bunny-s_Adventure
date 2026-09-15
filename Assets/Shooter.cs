@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/* Script: Aims the shooter at the mouse and spawns a random egg on a valid click.
+   Cheat sheet: Update runs every frame; SerializeField exposes a private value in Inspector; Instantiate creates a prefab. */
+
 /// <summary>Rotates the firing point toward the mouse and creates a randomly selected egg projectile on a valid click.</summary>
 public class Shooter : MonoBehaviour
 {
@@ -35,7 +38,7 @@ public class Shooter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Derive a normalized 0–360° aim angle from the shooter to the mouse every rendered frame.
+        // Derive a normalized 0-to-360 degree aim angle from the shooter to the mouse every frame.
         mousePos = camera.ScreenToWorldPoint(Input.mousePosition);
 
 

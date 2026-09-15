@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/* Script: Launches a player upward when they land on the spring and plays its animation and sound.
+   Cheat sheet: Collision2D describes a collision; Animator.SetTrigger starts an animation transition; velocity controls Rigidbody2D speed. */
+
 /// <summary>Platform attachment that plays a spring animation and gives a landing player a configurable vertical launch.</summary>
 public class Spring : MonoBehaviour
 {

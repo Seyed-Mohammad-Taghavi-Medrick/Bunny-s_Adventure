@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/* Script: Moves an enemy side to side in a sine-wave pattern based on camera width.
+   Cheat sheet: Mathf.Sin creates smooth oscillation; Random.Range gives each enemy a different phase; FixedUpdate runs on the physics tick. */
+
 /// <summary>Moves its object side-to-side using a sine wave whose range follows the camera's visible width.</summary>
 public class MoverEnmy : MonoBehaviour
 {

@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/* Script: Moves a platform side to side in a sine-wave pattern based on camera width.
+   Cheat sheet: Mathf.Sin creates smooth oscillation; Time.time is elapsed game time; ScreenToWorldPoint converts screen coordinates. */
+
 /// <summary>Moves a platform horizontally along a camera-width sine wave, with a per-instance phase offset.</summary>
 public class LineMovment : MonoBehaviour
 {

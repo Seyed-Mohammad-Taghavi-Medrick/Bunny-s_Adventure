@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/* Script: A platform variant that gives a stronger upward launch after a downward landing.
+   Cheat sheet: GetComponent reads a component on the same object; relativeVelocity indicates the impact direction. */
+
 /// <summary>Platform variant that launches any descending collider with a stronger configurable vertical velocity.</summary>
 public class JumpingBoard : MonoBehaviour
 {
