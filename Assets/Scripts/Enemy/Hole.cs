@@ -28,7 +28,7 @@ public class Hole : MonoBehaviour
 
         var player = other.GetComponent<Player>();
         var playerRigidbody = other.GetComponent<Rigidbody2D>();
-        if (player == null || playerRigidbody == null || player.isPlayerDamaged)
+        if (player == null || playerRigidbody == null || player.isPlayerDamaged || player.isJetpackenable)
             return;
 
         // Keep the collider active during this effect; GameManager disables it only once the pull completes.

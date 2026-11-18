@@ -31,7 +31,12 @@ public class Platform : MonoBehaviour
                 if (PlayerRigidBody != null && GetComponent<JumpingBoard>() == null && GetComponent<Spring>() == null)
                 {
                    
-                    PlayerRigidBody.velocity += new Vector2(PlayerRigidBody.velocity.x, power);
+                    PlayerRigidBody.velocity = new Vector2(
+                        PlayerRigidBody.velocity.x,
+                        power
+                    );
+                    
+                    
                     PlayerRigidBody.GetComponent<Player>().PlayJumpSFX();
                 }
             }
